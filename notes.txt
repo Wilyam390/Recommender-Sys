@@ -1,0 +1,15 @@
+(4.1) We can reframe the dataset so that we consider only, 4 and 5 star ratings as "interactions" in an implicit feedback data modelling.
+
+(4.3) The long-tail distributions for user and product activity also suggests that we could be using Bayesian average popular and user-stratified evaluation. BAP does well with sparse datasets and monopoly of activity.
+Also, how feasible is it to do data augmentation or some preprocessing step that enriches our data for improved model performance against sparsity?
+
+(5.3) Implement regression metrics with cross-validation and CVTT. 
+NDCG is 
+
+(7.4) We could apply neural-based collaborative filtering, which is basically SVD CF but more expressive / representative.
+
+
+Changes:
+Wrote cross-platform dataset loading.
+Added personalization and diversity to evaluation metrics planning.
+Changed the last non-personalized baseline with Bayesian average popular.
