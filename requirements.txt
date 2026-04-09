@@ -1,0 +1,26 @@
+# Core data
+numpy==1.26.4          # pinned <2.0 — scikit-surprise breaks on numpy>=2.0
+pandas==3.0.2
+scipy==1.17.1
+
+# Visualisation
+matplotlib==3.10.8
+seaborn==0.13.2
+
+# Machine learning
+scikit-learn==1.8.0
+scikit-surprise==1.1.4
+
+# NLP / text
+nltk==3.9.4
+spacy==3.8.14
+# After installing, also run: python -m spacy download en_core_web_sm
+
+# Transformers / embeddings
+torch==2.11.0
+transformers==5.5.0
+huggingface-hub==1.8.0
+sentence-transformers==5.3.0
+
+# Utilities
+tqdm==4.67.3
