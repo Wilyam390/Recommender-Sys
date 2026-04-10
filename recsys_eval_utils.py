@@ -1,11 +1,19 @@
 import numpy as np
 
 
+def _eligible_user_groups(eval_df, threshold):
+    """Yield per-user frames restricted to users with at least one relevant item."""
+    grouped = eval_df.sort_values("pred", ascending=False).groupby("UserId")
+    for _, user_df in grouped:
+        if (user_df["Score"] >= threshold).sum() > 0:
+            yield user_df
+
+
 def precision_at_k(eval_df, k=10, threshold=4):
     """Average Precision@k across users using predicted scores for ranking."""
     precision_scores = []
 
-    for _, user_df in eval_df.sort_values("pred", ascending=False).groupby("UserId"):
+    for user_df in _eligible_user_groups(eval_df, threshold):
         top_k = user_df.head(k)
         if len(top_k) == 0:
             continue
@@ -18,10 +26,8 @@ def recall_at_k(eval_df, k=10, threshold=4):
     """Average Recall@k across users using predicted scores for ranking."""
     recall_scores = []
 
-    for _, user_df in eval_df.sort_values("pred", ascending=False).groupby("UserId"):
+    for user_df in _eligible_user_groups(eval_df, threshold):
         n_relevant = (user_df["Score"] >= threshold).sum()
-        if n_relevant == 0:
-            continue
 
         top_k = user_df.head(k)
         relevant_in_top_k = (top_k["Score"] >= threshold).sum()
@@ -34,10 +40,8 @@ def map_at_k(eval_df, k=10, threshold=4):
     """Mean Average Precision@k across users."""
     ap_scores = []
 
-    for _, user_df in eval_df.sort_values("pred", ascending=False).groupby("UserId"):
+    for user_df in _eligible_user_groups(eval_df, threshold):
         n_relevant = (user_df["Score"] >= threshold).sum()
-        if n_relevant == 0:
-            continue
 
         top_k = user_df.head(k)
         relevance = (top_k["Score"] >= threshold).astype(int).values
@@ -59,10 +63,8 @@ def ndcg_at_k(eval_df, k=10, threshold=4):
     """Average NDCG@k across users with binary relevance from thresholded ratings."""
     ndcg_scores = []
 
-    for _, user_df in eval_df.sort_values("pred", ascending=False).groupby("UserId"):
+    for user_df in _eligible_user_groups(eval_df, threshold):
         n_relevant = (user_df["Score"] >= threshold).sum()
-        if n_relevant == 0:
-            continue
 
         top_k = user_df.head(k)
         relevance = (top_k["Score"] >= threshold).astype(int).values
