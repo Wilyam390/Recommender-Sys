@@ -32,7 +32,13 @@ from sentence_transformers import SentenceTransformer
 from surprise import Dataset, Reader, NormalPredictor, KNNBasic, KNNWithMeans, SVD, accuracy, BaselineOnly
 from surprise.model_selection import train_test_split as surprise_train_test_split
 
-from recsys_eval_utils import precision_at_k, recall_at_k, map_at_k, ndcg_at_k
+from recsys_eval_utils import (
+    precision_at_k,
+    recall_at_k,
+    map_at_k,
+    ndcg_at_k,
+    ranking_metrics_from_topn,
+)
 
 
 def configure_notebook():
@@ -52,6 +58,6 @@ __all__ = [
     "CountVectorizer", "TfidfVectorizer",
     "tqdm", "nltk", "stopwords", "spacy", "download", "SentenceTransformer",
     "Dataset", "Reader", "NormalPredictor", "KNNBasic", "KNNWithMeans", "SVD", "accuracy", "BaselineOnly", "surprise_train_test_split",
-    "precision_at_k", "recall_at_k", "map_at_k", "ndcg_at_k",
+    "precision_at_k", "recall_at_k", "map_at_k", "ndcg_at_k", "ranking_metrics_from_topn",
     "configure_notebook",
 ]
